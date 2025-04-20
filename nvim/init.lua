@@ -30,3 +30,8 @@ vim.keymap.set('n', 'gg', 'gg0', { noremap = true })
 vim.keymap.set('n', 'G', 'G$wb', { noremap = true })
 vim.keymap.set('n', '<S-y>', 'ggVG"+y', { noremap = true })
 vim.keymap.set('n', '<S-p>', 'ggVG"+p', { noremap = true })
+vim.keymap.set('n', '<leader>rn', function()
+  local is_relative = vim.wo.relativenumber
+  vim.wo.relativenumber = not is_relative
+  vim.wo.number = is_relative  -- Show absolute numbers when relative is off
+end, { desc = "Toggle relative line numbers" })
