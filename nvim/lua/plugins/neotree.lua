@@ -4,13 +4,23 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
-    "muniftanjim/nui.nvim",
+    "MunifTanjim/nui.nvim",
   },
   lazy = false,
-  opts = {},
   config = function()
     require("neo-tree").setup({
-      vim.keymap.set('n', '<C-n>', ':Neotree<CR>', { noremap = true }) -- Open Neo-tree
+      event_handlers = {
+        {
+          event = "file_opened",
+          handler = function()
+            -- Close Neo-tree when a file is opened
+            require("neo-tree.command").execute({ action = "close" })
+          end,
+        },
+      },
     })
-  end
+
+    -- Keymap to toggle Neo-tree
+    vim.keymap.set('n', '<C-n>', ':Neotree toggle<CR>', { noremap = true, silent = true })
+  end,
 }
