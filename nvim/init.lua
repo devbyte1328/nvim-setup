@@ -35,3 +35,11 @@ vim.keymap.set('n', '<leader>rn', function()
   vim.wo.relativenumber = not is_relative
   vim.wo.number = is_relative  -- Show absolute numbers when relative is off
 end, { desc = "Toggle relative line numbers" })
+vim.keymap.set("n", "<F5>", function() require("dap").continue() end, { desc = "DAP Continue" })
+vim.keymap.set("n", "<F10>", function() require("dap").step_over() end, { desc = "DAP Step Over" })
+vim.keymap.set("n", "<F11>", function() require("dap").step_into() end, { desc = "DAP Step Into" })
+vim.keymap.set("n", "<F12>", function() require("dap").step_out() end, { desc = "DAP Step Out" })
+vim.keymap.set("n", "<Leader>b", function() require("dap").toggle_breakpoint() end, { desc = "DAP Toggle Breakpoint" })
+vim.keymap.set("n", "<Leader>B", function()
+  require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, { desc = "DAP Conditional Breakpoint" })

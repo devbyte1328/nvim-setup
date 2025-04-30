@@ -1,0 +1,26 @@
+return {
+    "devbyte1328/volcano-nvim",
+    version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+    build = ":UpdateRemotePlugins",
+    config = function()
+        -- Set up Python provider to use local venv
+        vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/venv/bin/python")
+
+        -- Ensure Jupyter runtime directory exists
+        local jupyter_runtime_dir = vim.fn.expand("~/.local/share/jupyter/runtime/")
+        if vim.fn.isdirectory(jupyter_runtime_dir) == 0 then
+            vim.fn.mkdir(jupyter_runtime_dir, "p")
+        end
+
+        -- Molten config
+        vim.g.molten_output_win_max_height = 12
+
+        -- Auto-run :VolcanoInit if opening a .ipynb file
+        vim.api.nvim_create_autocmd("BufReadPost", {
+            pattern = "*.ipynb",
+            callback = function()
+                vim.cmd("VolcanoInit")
+            end,
+        })
+    end,
+}
